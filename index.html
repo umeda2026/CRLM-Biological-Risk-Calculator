@@ -51,12 +51,11 @@ h1 { font-size: 24px; line-height: 1.25; margin: 0; text-wrap: balance; }
 .points-label { font-size: 13px; color: var(--muted); margin: 0; }
 .points { font-size: 44px; font-weight: 700; line-height: 1; margin: 2px 0 0; font-variant-numeric: tabular-nums; }
 .points small { font-size: 16px; font-weight: 500; color: var(--muted); }
-.pill { display: inline-flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: 10px; border-left: 5px solid currentColor; font-size: 14px; max-width: 100%; }
+.pill { display: inline-flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: 10px; border-left: 5px solid currentColor; font-size: 14px; max-width: 100%; margin-bottom: 8px; }
 .pill strong { font-size: 16px; }
 .pill.low { color: var(--low); background: var(--low-bg); }
 .pill.mid { color: var(--mid); background: var(--mid-bg); }
 .pill.high { color: var(--high); background: var(--high-bg); }
-.pill span { color: var(--ink); }
 .scale { display: flex; flex-direction: column; gap: 4px; }
 .bar { position: relative; height: 14px; border-radius: 7px; overflow: visible; display: flex; }
 .seg { height: 100%; }
@@ -113,17 +112,17 @@ tfoot td { font-weight: 700; border-bottom: none; }
 <div class="result-top">
 <div>
 <p class="points-label">Total points</p>
-<p class="points"><span id="total">105</span> <small>/ 400</small></p>
+<p class="points"><span id="total">0</span> <small>/ 400</small></p>
 </div>
-<div id="pill" class="pill mid"><strong id="grp">Intermediate risk (100–150)</strong><span id="grp-txt">Borderline: response-guided strategy</span></div>
+<div id="pill" class="pill low"><strong id="grp">Low risk (&lt;100)</strong></div>
 </div>
 <div class="scale" aria-hidden="true">
-<div class="bar"><div class="seg low"></div><div class="seg mid"></div><div class="seg high"></div><div class="marker" id="marker" style="left:26.25%"></div></div>
+<div class="bar"><div class="seg low"></div><div class="seg mid"></div><div class="seg high"></div><div class="marker" id="marker" style="left:0%"></div></div>
 <div class="ticks"><span style="left:0">0</span><span style="left:25%">100</span><span style="left:37.5%">150</span><span style="left:100%">400</span></div>
 </div>
 <div class="surv">
-<div><p class="k">Predicted 3-year OS</p><p class="v" id="s3">76%</p></div>
-<div><p class="k">Predicted 5-year OS</p><p class="v" id="s5">56%</p></div>
+<div><p class="k">Predicted 3-year OS</p><p class="v" id="s3">86%</p></div>
+<div><p class="k">Predicted 5-year OS</p><p class="v" id="s5">73%</p></div>
 </div>
 </div>
 <p class="error" id="err" hidden></p>
@@ -136,8 +135,8 @@ tfoot td { font-weight: 700; border-bottom: none; }
 <div class="field" role="radiogroup" aria-labelledby="l-node">
 <div class="field-head"><span class="lab" id="l-node">Primary tumor nodal metastasis</span><span class="jp">原発巣リンパ節転移</span></div>
 <div class="seg-ctrl">
-<input type="radio" name="node" id="node0" value="0"><label for="node0">No</label>
-<input type="radio" name="node" id="node1" value="1" checked><label for="node1">Yes</label>
+<input type="radio" name="node" id="node0" value="0" checked><label for="node0">No</label>
+<input type="radio" name="node" id="node1" value="1"><label for="node1">Yes</label>
 </div>
 </div>
 <div class="field" role="radiogroup" aria-labelledby="l-kras">
@@ -157,17 +156,17 @@ tfoot td { font-weight: 700; border-bottom: none; }
 <div class="row2">
 <div class="field">
 <label for="size">Largest diameter (cm) <span class="jp">最大径</span></label>
-<input type="number" id="size" inputmode="decimal" min="0.1" max="30" step="0.1" value="2.5">
+<input type="number" id="size" inputmode="decimal" min="0.1" max="30" step="0.1" value="1">
 </div>
 <div class="field">
 <label for="num">No. of lesions <span class="jp">個数</span></label>
-<input type="number" id="num" inputmode="numeric" min="1" max="100" step="1" value="2">
+<input type="number" id="num" inputmode="numeric" min="1" max="100" step="1" value="1">
 </div>
 </div>
-<p class="tbs-line">Tumor burden score (TBS) = √(diameter² + number²) = <strong id="tbs">3.2</strong></p>
+<p class="tbs-line">Tumor burden score (TBS) = √(diameter² + number²) = <strong id="tbs">1.4</strong></p>
 <div class="field">
 <label for="ca">CA19-9 at diagnosis (U/mL) <span class="jp">診断時CA19-9</span></label>
-<input type="number" id="ca" inputmode="decimal" min="0" step="1" value="18">
+<input type="number" id="ca" inputmode="decimal" min="0" step="1" value="20">
 </div>
 </div>
 </form>
@@ -178,19 +177,19 @@ tfoot td { font-weight: 700; border-bottom: none; }
 <table>
 <thead><tr><th>Factor</th><th>Category</th><th>Points</th></tr></thead>
 <tbody>
-<tr><td>Primary nodal metastasis</td><td id="c-node">Yes</td><td id="p-node">65</td></tr>
+<tr><td>Primary nodal metastasis</td><td id="c-node">No</td><td id="p-node">0</td></tr>
 <tr><td>KRAS mutation</td><td id="c-kras">Wild-type</td><td id="p-kras">0</td></tr>
 <tr><td>Extrahepatic disease</td><td id="c-ehd">No</td><td id="p-ehd">0</td></tr>
-<tr><td>Tumor burden score</td><td id="c-tbs">3 to &lt;9</td><td id="p-tbs">40</td></tr>
+<tr><td>Tumor burden score</td><td id="c-tbs">&lt;3</td><td id="p-tbs">0</td></tr>
 <tr><td>CA19-9 at diagnosis</td><td id="c-ca">≤40 U/mL</td><td id="p-ca">0</td></tr>
 </tbody>
-<tfoot><tr><td colspan="2">Total</td><td id="p-total">105</td></tr></tfoot>
+<tfoot><tr><td colspan="2">Total</td><td id="p-total">0</td></tr></tfoot>
 </table>
 <p class="note">Points: nodal metastasis 65; KRAS mutation 70; extrahepatic disease 100; TBS 3 to &lt;9, 40 and ≥9, 85; CA19-9 &gt;40 U/mL, 60. Risk bands: low &lt;100, intermediate 100–150, high &gt;150.</p>
 </section>
 
 <section class="foot" aria-label="Notes and reference">
-<p class="note"><strong>For research and education only.</strong> Points and survival estimates are approximations reconstructed from the published nomogram. The model was derived from patients who underwent initial hepatectomy; it has not been validated for unresectable disease or for liver transplant candidates. Do not use it alone for individual treatment decisions.</p>
+<p class="note"><strong>For research and education only.</strong> Points and survival estimates are approximations reconstructed from the published nomogram. The model was derived from patients who underwent initial hepatectomy; it has not been validated for unresectable disease or for liver transplant candidates. It is not intended for the diagnosis or treatment of individual patients.</p>
 <p class="note">Calculations run on this device. Nothing you enter is stored or sent.</p>
 <p class="note">Reference: Umeda Y, et al. Ann Gastroenterol Surg 2026 (accepted). Contact: Yuzo Umeda, Ehime University.</p>
 </section>
@@ -213,9 +212,9 @@ tfoot td { font-weight: 700; border-bottom: none; }
     return { tbs: tbs, p: p, total: total, s3: surv(MODEL.s3), s5: surv(MODEL.s5), group: group };
   }
   var GROUPS = {
-    low: ['Low risk (<100)', 'Biologically resectable: upfront surgery appropriate'],
-    mid: ['Intermediate risk (100–150)', 'Borderline: response-guided strategy'],
-    high: ['High risk (>150)', 'Systemic therapy first, then reassess (not exclusion from surgery)']
+    low: 'Low risk (<100)',
+    mid: 'Intermediate risk (100–150)',
+    high: 'High risk (>150)'
   };
   var $ = function (id) { return document.getElementById(id); };
   var touched = false;
@@ -235,7 +234,7 @@ tfoot td { font-weight: 700; border-bottom: none; }
     $('s3').textContent = Math.round(r.s3 * 100) + '%';
     $('s5').textContent = Math.round(r.s5 * 100) + '%';
     $('pill').className = 'pill ' + r.group;
-    $('grp').textContent = GROUPS[r.group][0]; $('grp-txt').textContent = GROUPS[r.group][1];
+    $('grp').textContent = GROUPS[r.group];
     $('c-node').textContent = radio('node') ? 'Yes' : 'No'; $('p-node').textContent = r.p.node;
     $('c-kras').textContent = radio('kras') ? 'Mutant' : 'Wild-type'; $('p-kras').textContent = r.p.kras;
     $('c-ehd').textContent = radio('ehd') ? 'Yes' : 'No'; $('p-ehd').textContent = r.p.ehd;
